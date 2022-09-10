@@ -1,12 +1,12 @@
 #Leonardo Gracida Munoz A01379812
 #Importamos todas las librerias necesarias
-import matplotlib.pyplot as plt
+import graphviz
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_val_score
+from sklearn import tree
 import sklearn.metrics as sm
 
 #Leemos la dataset de los hongos
@@ -73,3 +73,9 @@ for i in range(15):
     else:
         predic = "Comestible"
     print("Real: ",real," ,Prediccion: ", predic)
+
+#Mostramos el arbol resultante
+arbol = tree.export_graphviz(rnd_clf.estimators_[0], feature_names=X_train.columns, class_names=["poison","edible"],
+                            filled=True, rounded=True,  special_characters=True)
+graph = graphviz.Source(arbol)
+graph.view()
